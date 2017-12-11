@@ -1,0 +1,5 @@
+.tscache
+.idea
+node_modules
+dist/*
+.env
