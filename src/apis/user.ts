@@ -18,7 +18,7 @@ export class UserApi {
         console.log("Creating apis.");
         router.post(ApiToolsService.BASE_API_V1+UserApi.LOGIN, AccessGrantedService.publicAccess, this.login.bind(this));
         router.post(ApiToolsService.BASE_API_V1+UserApi.REGISTER, AccessGrantedService.publicAccess, this.register.bind(this));
-        router.get(ApiToolsService.BASE_API_V1+UserApi.USER, AccessGrantedService.restrictedAccess, this.getUsers.bind(this));
+        router.get(ApiToolsService.BASE_API_V1+UserApi.USER, AccessGrantedService.publicAccess, this.getUsers.bind(this));
         router.get(ApiToolsService.BASE_API_V1+UserApi.USER+":id", AccessGrantedService.publicAccess, this.getUser.bind(this));
     }
 

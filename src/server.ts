@@ -2,21 +2,18 @@ import * as bodyParser from "body-parser";
 import * as cookieParser from "cookie-parser";
 import * as express from "express";
 import * as path from "path";
-import { UserApi } from "./apis/user";
-import { IndexRoute } from "./routes/index";
-import { IModel } from "./models/model";
-import { IUserModel } from "./models/user";
-import { userSchema } from "./schemas/user";
+import {UserApi} from "./apis/user";
+import {IndexRoute} from "./routes/index";
+import {IModel} from "./models/model";
+import {MongooseConnector} from "./services/MongooseConnector";
 import errorHandler = require("errorhandler");
 import methodOverride = require("method-override");
 import mongoose = require("mongoose");
 
+
 export class Server {
     public app: express.Application;
 
-    private _dbHost: string;
-    private _documentName: string;
-    private _mongoDbPort: string;
     private _model: IModel;
     private _router: express.Router;
     private _connection: mongoose.Connection;
@@ -37,28 +34,24 @@ export class Server {
      * @constructor
      */
     constructor() {
-        this._dbHost = process.env.DB_HOST;
-        this._documentName = process.env.DB_NAME;
-        this._mongoDbPort = process.env.DB_PORT;
         this._router = express.Router();
-        this._model = {user:null};
+        this._model = {user: null};
         this.app = express();
         this.config().then(isOk => {
-            if(isOk) {
+            if (isOk) {
                 this.api();
                 this.routes();
                 this.app.use(this._router);
             } else {
                 console.log("Erreur lors du chargement de la configuration");
             }
-        });
+        }).catch(err => console.log(err));
     }
 
     public config(): Promise<boolean> {
         return new Promise((resolve, reject) => {
-            try{
-                // Create connection string
-                const MONGODB_CONNECTION: string = `mongodb://${this._dbHost}:${this._mongoDbPort}/${this._documentName}`;
+            try {
+
                 //add static paths
                 this.app.use(express.static(path.join(__dirname, "public")));
 
@@ -78,15 +71,16 @@ export class Server {
                 // Configure override
                 this.app.use(methodOverride());
 
-                // Use q promise
-                global.Promise = require("q").Promise;
-                mongoose.Promise = global.Promise;
+                // // Fix mongoose Promise
+                // mongoose.Promise = global.Promise;
+                // // Create connection string
+                // const MONGODB_CONNECTION: string = `mongodb://${this._dbHost}:${this._mongoDbPort}/${this._documentName}`;
+                // // Connect to mongoose
+                // this._connection = mongoose.createConnection(MONGODB_CONNECTION);
+                // console.log(`Connected on mongoose document ${this._documentName} on port ${this._mongoDbPort}`);
 
-                // Connect to mongoose
-                this._connection = mongoose.createConnection(MONGODB_CONNECTION);
-                console.log(`Connected on mongoose document ${this._documentName} on port ${this._mongoDbPort}`);
-
-                this._model.user = this._connection.model<IUserModel>("User", userSchema);
+                this._connection = MongooseConnector.getInstance().then();
+                this._model.user = MongooseConnector.getInstance().getUserModel();
 
                 // Catch 404 error and forward to error handler
                 this.app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
@@ -97,8 +91,8 @@ export class Server {
                 // Error handling
                 this.app.use(errorHandler());
                 resolve(true);
-            } catch(Exception) {
-                reject(false);
+            } catch (Exception) {
+                reject(Exception);
             }
         });
     }
