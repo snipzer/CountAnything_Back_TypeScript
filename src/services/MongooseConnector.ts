@@ -15,7 +15,7 @@ export class MongooseConnector {
         return this._instance;
     }
 
-    private _connection: mongoose.Connection;
+    private _connection: mongoose.Connection = null;
 
     private constructor() {
         mongoose.Promise = global.Promise;
@@ -30,7 +30,8 @@ export class MongooseConnector {
     }
 
     public async createConnection(): Promise<any>{
-        this._connection = await mongoose.createConnection(this.MONGODB_CONNECTION);
+        if(this._connection === null)
+            this._connection = await mongoose.createConnection(this.MONGODB_CONNECTION);
     }
 
     public logSuccessConnection(): void {
