@@ -42,6 +42,7 @@ export class AccessGrantedService {
     }
 
     public static async cryptPassword(password: string): Promise<string> {
+        //noinspection TypeScriptValidateTypes
         return await bcrypt.hash(password, 10).then(hash => hash);
     }
 }
