@@ -30,6 +30,7 @@ export class Server {
         return new Server();
     }
 
+    // TODO Gerer l'erreur de connection à mongo
     /**
      * Constructor
      * @class server
