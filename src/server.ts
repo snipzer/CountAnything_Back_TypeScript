@@ -9,6 +9,8 @@ import {MongooseConnector} from "./services/MongooseConnector";
 import errorHandler = require("errorhandler");
 import methodOverride = require("method-override");
 import mongoose = require("mongoose");
+import {userSchema} from "./schemas/user";
+import {IUserModel} from "./models/user";
 
 
 export class Server {
@@ -37,15 +39,20 @@ export class Server {
         this._router = express.Router();
         this._model = {user: null};
         this.app = express();
-        this.config().then(isOk => {
-            if (isOk) {
-                this.api();
-                this.routes();
-                this.app.use(this._router);
-            } else {
-                console.log("Erreur lors du chargement de la configuration");
-            }
-        }).catch(err => console.log(err));
+        MongooseConnector.getInstance().createConnection().then(() => {
+            MongooseConnector.getInstance().logSuccessConnection();
+            this._connection = MongooseConnector.getInstance().getConnection();
+            this._model.user = this._connection.model<IUserModel>("User", userSchema);
+            this.config().then(isOk => {
+                if (isOk) {
+                    this.api();
+                    this.routes();
+                    this.app.use(this._router);
+                } else {
+                    console.log("Erreur lors du chargement de la configuration");
+                }
+            }).catch(err => console.log(err));
+        });
     }
 
     public config(): Promise<boolean> {
@@ -79,8 +86,6 @@ export class Server {
                 // this._connection = mongoose.createConnection(MONGODB_CONNECTION);
                 // console.log(`Connected on mongoose document ${this._documentName} on port ${this._mongoDbPort}`);
 
-                this._connection = MongooseConnector.getInstance().then();
-                this._model.user = MongooseConnector.getInstance().getUserModel();
 
                 // Catch 404 error and forward to error handler
                 this.app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
