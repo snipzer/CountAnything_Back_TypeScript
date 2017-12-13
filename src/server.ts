@@ -78,15 +78,6 @@ export class Server {
                 // Configure override
                 this.app.use(methodOverride());
 
-                // // Fix mongoose Promise
-                // mongoose.Promise = global.Promise;
-                // // Create connection string
-                // const MONGODB_CONNECTION: string = `mongodb://${this._dbHost}:${this._mongoDbPort}/${this._documentName}`;
-                // // Connect to mongoose
-                // this._connection = mongoose.createConnection(MONGODB_CONNECTION);
-                // console.log(`Connected on mongoose document ${this._documentName} on port ${this._mongoDbPort}`);
-
-
                 // Catch 404 error and forward to error handler
                 this.app.use((err: any, req: express.Request, res: express.Response, next: express.NextFunction) => {
                     err.status = 404;
