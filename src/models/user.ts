@@ -1,7 +1,9 @@
 import { Document } from "mongoose";
-import { IUser } from "../interfaces/user";
 
-export interface IUserModel extends IUser, Document {
-
-
+export interface IUserModel extends Document {
+    email: string;
+    password:string;
+    firstName?:string;
+    lastName?:string;
+    createdAt?:string;
 }

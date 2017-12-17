@@ -1,11 +1,11 @@
 import {IUserModel} from "../models/user";
-import {ModeleFactory} from "./ModeleFactory";
 import * as _ from 'underscore';
+import {IModel} from "../models/model";
 
 export class LoggerService {
 
     static PATH_TO_USER_FILE: string;
-    static MODELE_FACTORY: ModeleFactory;
+    static MODELE_FACTORY: IModel<IUserModel>;
 
     public static loggerAction: Object = {
         WARNING: "warning",
@@ -45,7 +45,7 @@ export class LoggerService {
     private static writeIntoFile() {}
 
     private static writeIntoBdd() {
-        this.MODELE_FACTORY.USER.create({});
+        //this.MODELE_FACTORY.USER.create({});
     }
 
 }

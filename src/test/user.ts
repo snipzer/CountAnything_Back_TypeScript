@@ -1,5 +1,4 @@
 import { suite, test } from "mocha-typescript";
-import { IUser } from "../interfaces/user";
 import { IUserModel } from "../models/user";
 import { userSchema } from "../schemas/user";
 import mongoose = require("mongoose");
@@ -8,7 +7,7 @@ import mongoose = require("mongoose");
 @suite
 class UserTest {
     // Store test data
-    private _data:IUser;
+    private _data;
 
     // Store userModel
     public static User: mongoose.Model<IUserModel>;

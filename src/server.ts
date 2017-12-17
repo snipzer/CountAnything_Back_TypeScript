@@ -11,14 +11,15 @@ import methodOverride = require("method-override");
 import mongoose = require("mongoose");
 import {userSchema} from "./schemas/user";
 import {IUserModel} from "./models/user";
-import {ModeleFactory} from "./services/ModeleFactory";
+import {UserRepository} from "./repository/userRepository";
 
 export class Server {
     public app: express.Application;
 
-    private _model: ModeleFactory;
     private _router: express.Router;
     private _connection: mongoose.Connection;
+    private _model: IModel<IUserModel>;
+    private _userRepository: UserRepository;
 
     /**
      * @class Server
@@ -37,9 +38,10 @@ export class Server {
      * @constructor
      */
     constructor() {
-        this._model = new ModeleFactory();
         this._router = express.Router();
         this.app = express();
+        this._model = {USER: null};
+        this._userRepository = null;
         MongooseConnector.getInstance().createConnection().then(() => {
             MongooseConnector.getInstance().logSuccessConnection();
             this._connection = MongooseConnector.getInstance().getConnection();
@@ -96,10 +98,16 @@ export class Server {
 
     public modeles():void {
         this._model.USER = this._connection.model<IUserModel>("User", userSchema);
+        this._userRepository = new UserRepository(this._model.USER);
+        this._userRepository.getAll().then(users => {
+            users.forEach(user => {
+                console.log(user);
+            });
+        });
     }
 
     public api(): void {
-        let userApi = new UserApi(this._model.USER);
+        let userApi = new UserApi(this._userRepository);
         userApi.create(this._router);
     }
 
