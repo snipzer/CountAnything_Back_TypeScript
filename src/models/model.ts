@@ -1,6 +1,6 @@
 import { Model } from "mongoose";
 import {IUserModel} from "./user";
 
-export interface IModel {
+export interface IModel<T> {
     user: Model<IUserModel>;
 }

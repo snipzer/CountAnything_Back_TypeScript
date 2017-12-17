@@ -3,6 +3,7 @@ import { ApiToolsService } from "../services/apiToolsService";
 import { AccessGrantedService } from "../services/accessGrantedService";
 
 // TODO VERIFIER LES PARAMETRES D'ENTRER DE CHAQUES METHODES
+// TODO AJOUTER UNE REPOSITORY POUR L'USER
 export class UserApi {
 
     static LOGIN: string = "login";

@@ -1,7 +1,8 @@
 import { ApiToolsService } from "./apiToolsService";
-import _ from "underscore";
 import bcrypt = require('bcrypt');
 import jwt = require("jsonwebtoken");
+import * as _ from 'underscore';
+
 
 export class AccessGrantedService {
 

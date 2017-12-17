@@ -4,7 +4,7 @@
   "description": "The absolute app to count... anything !",
   "main": "index.js",
   "scripts": {
-    "dev": "SET NODE_ENV=development && grunt && nodemon ./bin/www",
+    "dev": "grunt && nodemon ./bin/www",
     "grunt": "grunt",
     "start": "node ./bin/www",
     "test": "mocha dist/test"
@@ -12,6 +12,7 @@
   "author": "Snipzer",
   "license": "ISC",
   "dependencies": {
+    "@types/underscore": "^1.8.6",
     "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
     "cookie-parser": "^1.4.3",
