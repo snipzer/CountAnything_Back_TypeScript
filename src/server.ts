@@ -10,16 +10,20 @@ import errorHandler = require("errorhandler");
 import methodOverride = require("method-override");
 import mongoose = require("mongoose");
 import {userSchema} from "./schemas/user";
+import {counterSchema} from "./schemas/counter"
 import {IUserModel} from "./models/user";
+import {ICounterModel} from "./models/counter"
 import {UserRepository} from "./repository/userRepository";
+import {CounterRepository} from "./repository/counterRepository"
 
 export class Server {
     public app: express.Application;
 
     private _router: express.Router;
     private _connection: mongoose.Connection;
-    private _model: IModel<IUserModel>;
+    private _model: any;
     private _userRepository: UserRepository;
+    private _counterRepository: CounterRepository;
 
     /**
      * @class Server
@@ -32,6 +36,7 @@ export class Server {
     }
 
     // TODO Gerer l'erreur de connection à mongo
+    // TODO Ajouter une factory pour les répositories
     /**
      * Constructor
      * @class server
@@ -40,8 +45,9 @@ export class Server {
     constructor() {
         this._router = express.Router();
         this.app = express();
-        this._model = {USER: null};
+        this._model = {USER: null, COUNTER: null};
         this._userRepository = null;
+        this._counterRepository = null;
         MongooseConnector.getInstance().createConnection().then(() => {
             MongooseConnector.getInstance().logSuccessConnection();
             this._connection = MongooseConnector.getInstance().getConnection();
@@ -97,13 +103,12 @@ export class Server {
     }
 
     public modeles():void {
-        this._model.USER = this._connection.model<IUserModel>("User", userSchema);
+        this._model.USER = this._connection.model<IUserModel>('User', userSchema);
+        this._model.COUNTER = this._connection.model<ICounterModel>('Counter', counterSchema);
         this._userRepository = new UserRepository(this._model.USER);
-        this._userRepository.getAll().then(users => {
-            users.forEach(user => {
-                console.log(user);
-            });
-        });
+        this._counterRepository = new CounterRepository(this._model.COUNTER);
+
+        this._counterRepository.post().then(counter => console.log(counter));
     }
 
     public api(): void {
