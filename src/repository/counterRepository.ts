@@ -1,19 +1,11 @@
 import {ICounterModel} from "../models/counter";
 import mongoose = require("mongoose");
+import {BaseRepository} from "./baseRepository";
 
-export class CounterRepository {
-    private _modele: mongoose.Model<ICounterModel>;
+export class CounterRepository extends BaseRepository<ICounterModel> {
 
     constructor(modele) {
-        this._modele = modele;
-    }
-
-    async getAll() {
-        return await this._modele.find({});
-    }
-
-    async getOneById(id) {
-        return await this._modele.findOne({_id: id});
+        super(modele);
     }
 
     async getOneByDate(date:Date) {

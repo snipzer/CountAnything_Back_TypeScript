@@ -98,9 +98,9 @@ export class Server {
     }
 
     public modeles():void {
-        this._model.USER = this._connection.model<IUserModel>('User', userSchema);
         this._model.COUNTER = this._connection.model<ICounterModel>('Counter', counterSchema);
         this._model.COUNTER_SET = this._connection.model<ICounterSetModel>('CounterSet', counterSetSchema);
+        this._model.USER = this._connection.model<IUserModel>('User', userSchema);
         this._repository = new RepositoryFactory(this._model).init();
 
         this._repository.COUNTER.post()

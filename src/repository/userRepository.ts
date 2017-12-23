@@ -1,19 +1,10 @@
 import {IUserModel} from "../models/user";
-import mongoose = require("mongoose");
+import {BaseRepository} from "./baseRepository";
 
-export class UserRepository{
-    private _modele: mongoose.Model<IUserModel>;
+export class UserRepository extends BaseRepository<IUserModel> {
 
     constructor(modele) {
-        this._modele = modele;
-    }
-
-    async getAll() {
-        return await this._modele.find({});
-    }
-
-    async getOneById(id) {
-        return await this._modele.findOne({_id: id});
+        super(modele);
     }
 
     async getOneByEmail(email) {
@@ -26,6 +17,7 @@ export class UserRepository{
             password: password,
             firstName: firstName,
             lastName: lastName,
-        })
+            counterSets: []
+        });
     }
 }

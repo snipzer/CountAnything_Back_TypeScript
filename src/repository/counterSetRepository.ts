@@ -1,25 +1,16 @@
 import {ICounterSetModel} from "../models/counterSet";
-import mongoose = require("mongoose");
+import {BaseRepository} from "./baseRepository";
 
-export class CounterSetRepository {
-    private _modele: mongoose.Model<ICounterSetModel>;
+export class CounterSetRepository extends BaseRepository<ICounterSetModel> {
 
     constructor(modele) {
-        this._modele = modele;
+        super(modele);
     }
 
-    async getAll() {
-        return await this._modele.find({});
-    }
-
-    async getOneById(id) {
-        return await this._modele.findOne({_id: id});
-    }
-
-
-    async post() {
+    async post(label) {
         return await this._modele.create({
-            date: new Date()
+            label: label,
+            counters: []
         });
     }
 }
