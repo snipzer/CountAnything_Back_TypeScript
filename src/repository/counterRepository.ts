@@ -8,7 +8,7 @@ export class CounterRepository extends BaseRepository<ICounterModel> {
         super(modele);
     }
 
-    async getOneByDate(date:Date) {
+    async getByDate(date:Date) {
         return await this._modele.findOne({date: date});
     }
 

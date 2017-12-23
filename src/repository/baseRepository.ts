@@ -1,7 +1,7 @@
 import mongoose = require('mongoose');
 
 export class BaseRepository<T> {
-    protected _modele: mongoose.Model<T>;
+    protected _modele: mongoose.Model<any>;
 
     constructor(modele) {
         this._modele = modele;
