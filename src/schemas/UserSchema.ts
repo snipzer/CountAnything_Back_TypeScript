@@ -1,5 +1,5 @@
 import { Schema } from "mongoose";
-import {counterSetSchema} from "./counterSet";
+import {counterSetSchema} from "./CounterSetSchema";
 import * as _ from "underscore";
 
 export let userSchema: Schema = new Schema({

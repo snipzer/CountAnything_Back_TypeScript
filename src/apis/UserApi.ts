@@ -1,7 +1,7 @@
 import {Request, Response, Router} from "express";
-import {ApiToolsService} from "../services/apiToolsService";
-import {AccessGrantedService} from "../services/accessGrantedService";
-import {UserRepository} from "../repository/userRepository";
+import {ApiToolsService} from "../services/ApiToolsService";
+import {AccessGrantedService} from "../services/AccessGrantedService";
+import {UserRepository} from "../repository/UserRepository";
 
 // TODO VERIFIER LES PARAMETRES D'ENTRER DE CHAQUES METHODES
 export class UserApi {

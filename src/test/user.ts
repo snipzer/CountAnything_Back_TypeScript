@@ -1,6 +1,6 @@
 import { suite, test } from "mocha-typescript";
-import { IUserModel } from "../models/user";
-import { userSchema } from "../schemas/user";
+import { IUserModel } from "../models/UserModele";
+import { userSchema } from "../schemas/UserSchema";
 import mongoose = require("mongoose");
 
 // TODO rendre générique la méthode before

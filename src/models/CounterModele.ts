@@ -1,5 +1,5 @@
 import {Document} from "mongoose";
-import {IUserModel} from "./user";
+import {IUserModel} from "./UserModele";
 
 export interface ICounterModel extends Document {
     date: Date,

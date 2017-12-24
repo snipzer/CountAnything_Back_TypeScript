@@ -1,6 +1,6 @@
-import {IUserModel} from "../models/user";
-import {BaseRepository} from "./baseRepository";
-import {CounterSetRepository} from "./counterSetRepository";
+import {IUserModel} from "../models/UserModele";
+import {BaseRepository} from "./BaseRepository";
+import {CounterSetRepository} from "./CounterSetRepository";
 
 export class UserRepository extends BaseRepository<IUserModel> {
 

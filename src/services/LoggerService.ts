@@ -1,6 +1,6 @@
-import {IUserModel} from "../models/user";
+import {IUserModel} from "../models/UserModele";
 import * as _ from 'underscore';
-import {IModel} from "../models/model";
+import {IModel} from "../models/BaseModel";
 
 export class LoggerService {
 

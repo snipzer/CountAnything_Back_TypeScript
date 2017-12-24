@@ -1,6 +1,6 @@
-import {ICounterModel} from "../models/counter";
+import {ICounterModel} from "../models/CounterModele";
 import mongoose = require("mongoose");
-import {BaseRepository} from "./baseRepository";
+import {BaseRepository} from "./BaseRepository";
 
 export class CounterRepository extends BaseRepository<ICounterModel> {
 

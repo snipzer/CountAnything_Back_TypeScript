@@ -1,4 +1,4 @@
-import { ApiToolsService } from "./apiToolsService";
+import { ApiToolsService } from "./ApiToolsService";
 import bcrypt = require('bcrypt');
 import jwt = require("jsonwebtoken");
 import * as _ from 'underscore';

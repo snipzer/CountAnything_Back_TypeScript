@@ -2,19 +2,19 @@ import * as bodyParser from "body-parser";
 import * as cookieParser from "cookie-parser";
 import * as express from "express";
 import * as path from "path";
-import {UserApi} from "./apis/user";
-import {IndexRoute} from "./routes/index";
+import {UserApi} from "./apis/UserApi";
+import {IndexRoute} from "./routes/Index";
 import {MongooseConnector} from "./services/MongooseConnector";
 import methodOverride = require("method-override");
 import mongoose = require("mongoose");
-import {userSchema} from "./schemas/user";
-import {counterSchema} from "./schemas/counter";
-import {counterSetSchema} from "./schemas/counterSet";
-import {IUserModel} from "./models/user";
-import {ICounterModel} from "./models/counter"
-import {ICounterSetModel} from "./models/counterSet";
-import {IModel} from "./models/model";
-import {RepositoryFactory} from "./repository/repositoryFactory";
+import {userSchema} from "./schemas/UserSchema";
+import {counterSchema} from "./schemas/CounterSchema";
+import {counterSetSchema} from "./schemas/CounterSetSchema";
+import {IUserModel} from "./models/UserModele";
+import {ICounterModel} from "./models/CounterModele"
+import {ICounterSetModel} from "./models/CounterSetModele";
+import {IModel} from "./models/BaseModel";
+import {RepositoryFactory} from "./repository/RepositoryFactory";
 
 export class Server {
     public app: express.Application;

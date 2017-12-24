@@ -1,6 +1,6 @@
 import {Document} from "mongoose";
-import {ICounterModel} from "./counter";
-import {IUserModel} from "./user";
+import {ICounterModel} from "./CounterModele";
+import {IUserModel} from "./UserModele";
 
 export interface ICounterSetModel extends Document {
     label: String,

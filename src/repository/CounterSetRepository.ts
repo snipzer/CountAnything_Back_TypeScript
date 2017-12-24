@@ -1,5 +1,5 @@
-import {ICounterSetModel} from "../models/counterSet";
-import {BaseRepository} from "./baseRepository";
+import {ICounterSetModel} from "../models/CounterSetModele";
+import {BaseRepository} from "./BaseRepository";
 import {Model} from "mongoose";
 
 export class CounterSetRepository extends BaseRepository<ICounterSetModel> {

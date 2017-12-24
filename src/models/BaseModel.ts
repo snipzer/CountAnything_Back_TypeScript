@@ -1,7 +1,7 @@
 import { Model } from "mongoose";
-import {IUserModel} from "./user";
-import {ICounterModel} from "./counter";
-import {ICounterSetModel} from "./counterSet";
+import {IUserModel} from "./UserModele";
+import {ICounterModel} from "./CounterModele";
+import {ICounterSetModel} from "./CounterSetModele";
 
 export interface IModel<T> {
     USER: Model<IUserModel>;

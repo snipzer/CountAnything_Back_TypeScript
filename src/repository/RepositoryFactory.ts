@@ -1,7 +1,7 @@
-import {UserRepository} from "./userRepository";
-import {IModel} from "../models/model";
-import {CounterRepository} from "./counterRepository";
-import {CounterSetRepository} from "./counterSetRepository";
+import {UserRepository} from "./UserRepository";
+import {IModel} from "../models/BaseModel";
+import {CounterRepository} from "./CounterRepository";
+import {CounterSetRepository} from "./CounterSetRepository";
 
 export class RepositoryFactory {
 
