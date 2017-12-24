@@ -18,12 +18,13 @@ export class UserApi {
     }
 
     public create(router: Router) {
-        console.log("Creating apis.");
-        router.post(ApiToolsService.BASE_API_V1 + UserApi.LOGIN, AccessGrantedService.publicAccess, this.login.bind(this));
-        router.post(ApiToolsService.BASE_API_V1 + UserApi.REGISTER, AccessGrantedService.publicAccess, this.register.bind(this));
-        router.get(ApiToolsService.BASE_API_V1 + UserApi.USER, AccessGrantedService.publicAccess, this.getUsers.bind(this));
-        router.get(ApiToolsService.BASE_API_V1 + UserApi.USER + UserApi.ID, AccessGrantedService.publicAccess, this.getUser.bind(this));
-        router.post(ApiToolsService.BASE_API_V1 + UserApi.USER + UserApi.ID + UserApi.COUNTER_SET, AccessGrantedService.publicAccess, this.createCounterSet.bind(this));
+        console.log("Creating user's api.");
+        router.post(ApiToolsService.BASE_API_V1 + "login", AccessGrantedService.publicAccess, this.login.bind(this));
+        router.post(ApiToolsService.BASE_API_V1 + "register", AccessGrantedService.publicAccess, this.register.bind(this));
+        router.get(ApiToolsService.BASE_API_V1 + "user", AccessGrantedService.publicAccess, this.getUsers.bind(this));
+        router.get(ApiToolsService.BASE_API_V1 + "user/:id", AccessGrantedService.publicAccess, this.getUser.bind(this));
+        router.post(ApiToolsService.BASE_API_V1 + "user/:id/counterSet", AccessGrantedService.publicAccess, this.createCounterSet.bind(this));
+        router.get(ApiToolsService.BASE_API_V1 + "user/:idUser/counterSet/:idCounterSet/remove", AccessGrantedService.publicAccess, this.removeCounterSet.bind(this));
     }
 
     public getUsers(req: Request, res: Response) {
@@ -38,10 +39,17 @@ export class UserApi {
             .catch(err => ApiToolsService.sendJsonResponse(res, err, ApiToolsService.STATUS.INTERNAL_SERVER_ERROR));
     }
 
+    // TODO empecher la création de deux counter avec un label identique
     public createCounterSet(req: Request, res: Response) {
         this._userRepository.createCounterSet(req.params.id, req.body.label)
             .then(counterSet => ApiToolsService.sendJsonResponse(res, counterSet, ApiToolsService.STATUS.OK))
             .catch(err => ApiToolsService.sendJsonResponse(res, err, ApiToolsService.STATUS.INTERNAL_SERVER_ERROR));
+    }
+
+    public removeCounterSet(req: Request, res: Response) {
+        this._userRepository.removeCounterSet(req.params.idUser, req.params.idCounterSet)
+            .then(response => ApiToolsService.sendJsonResponse(res, response, ApiToolsService.STATUS.OK))
+            .catch(error => ApiToolsService.sendJsonResponse(res, error, ApiToolsService.STATUS.INTERNAL_SERVER_ERROR));
     }
 
     public login(req: Request, res: Response) {

@@ -38,4 +38,17 @@ export class UserRepository extends BaseRepository<IUserModel> {
                 return err;
             });
     }
+
+    // Fonction qui supprime un compteur d'un utilisateur
+    async removeCounterSet(idUser: string, idCounterSet: string) {
+        let isDeleted: boolean = false;
+        let user = await this.getOneById(idUser);
+        let counterSet = await this._counterSetRepository.getOneById(idCounterSet);
+        const index = user.counterSets.indexOf(counterSet);
+        user.counterSets.splice(index, 1);
+        user.save();
+        return this._counterSetRepository.deleteById(idCounterSet)
+            .then(response => {return response;})
+            .catch(error => {return error;});
+    }
 }
