@@ -14,4 +14,11 @@ export class CounterSetRepository extends BaseRepository<ICounterSetModel> {
             counters: []
         });
     }
+
+    async put(id:string, label: string) {
+        let counterSet = await this.getOneById(id);
+        counterSet.label = label.trim();
+        counterSet.save();
+        return counterSet;
+    }
 }

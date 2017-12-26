@@ -62,4 +62,16 @@ export class UserRepository extends BaseRepository<IUserModel> {
                 return error;
             });
     }
+
+    async updateCounterSet(idUser: string, idCounterSet: string, label: string) {
+        let user = await this.getOneById(idUser);
+        user.counterSets.forEach(counterSet => {
+            if(counterSet._id == idCounterSet) {
+                counterSet.label = label.trim();
+            }
+        });
+        user.save();
+        await this._counterSetRepository.put(idCounterSet, label);
+        return user;
+    }
 }

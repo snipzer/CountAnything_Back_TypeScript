@@ -25,6 +25,7 @@ export class UserApi {
         router.get(ApiToolsService.BASE_API_V1 + "user", AccessGrantedService.publicAccess, this.getUsers.bind(this));
         router.get(ApiToolsService.BASE_API_V1 + "user/:id", AccessGrantedService.publicAccess, this.getUser.bind(this));
         router.post(ApiToolsService.BASE_API_V1 + "user/:id/counterSet", AccessGrantedService.publicAccess, this.createCounterSet.bind(this));
+        router.post(ApiToolsService.BASE_API_V1 + "user/:idUser/counterSet/:idCounterSet", AccessGrantedService.publicAccess, this.updateCounterSet.bind(this));
         router.get(ApiToolsService.BASE_API_V1 + "user/:idUser/counterSet/:idCounterSet/remove", AccessGrantedService.publicAccess, this.removeCounterSet.bind(this));
     }
 
@@ -54,6 +55,12 @@ export class UserApi {
 
     public removeCounterSet(req: Request, res: Response) {
         this._userRepository.removeCounterSet(req.params.idUser, req.params.idCounterSet)
+            .then(response => ApiToolsService.sendJsonResponse(res, response, ApiToolsService.STATUS.OK))
+            .catch(error => ApiToolsService.sendJsonResponse(res, error, ApiToolsService.STATUS.INTERNAL_SERVER_ERROR));
+    }
+
+    public updateCounterSet(req: Request, res: Response) {
+        this._userRepository.updateCounterSet(req.params.idUser, req.params.idCounterSet, req.body.label)
             .then(response => ApiToolsService.sendJsonResponse(res, response, ApiToolsService.STATUS.OK))
             .catch(error => ApiToolsService.sendJsonResponse(res, error, ApiToolsService.STATUS.INTERNAL_SERVER_ERROR));
     }
