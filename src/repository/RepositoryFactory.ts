@@ -17,7 +17,7 @@ export class RepositoryFactory {
     public init() {
         this.COUNTER = new CounterRepository(this._modele.COUNTER);
         this.COUNTER_SET = new CounterSetRepository(this._modele.COUNTER_SET);
-        this.USER = new UserRepository(this._modele.USER, this.COUNTER_SET);
+        this.USER = new UserRepository(this._modele.USER, this.COUNTER_SET, this.COUNTER);
         return this;
     }
 

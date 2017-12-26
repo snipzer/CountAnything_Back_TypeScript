@@ -102,9 +102,6 @@ export class Server {
         this._model.COUNTER_SET = this._connection.model<ICounterSetModel>('CounterSet', counterSetSchema);
         this._model.USER = this._connection.model<IUserModel>('User', userSchema);
         this._repository = new RepositoryFactory(this._model).init();
-
-        this._repository.COUNTER.post()
-            .then(counter => counter.save()).catch(err => console.log(err));
     }
 
     public api(): void {

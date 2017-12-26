@@ -26,7 +26,8 @@ export class UserApi {
         router.get(ApiToolsService.BASE_API_V1 + "user/:id", AccessGrantedService.publicAccess, this.getUser.bind(this));
         router.post(ApiToolsService.BASE_API_V1 + "user/:id/counterSet", AccessGrantedService.publicAccess, this.createCounterSet.bind(this));
         router.post(ApiToolsService.BASE_API_V1 + "user/:idUser/counterSet/:idCounterSet", AccessGrantedService.publicAccess, this.updateCounterSet.bind(this));
-        router.get(ApiToolsService.BASE_API_V1 + "user/:idUser/counterSet/:idCounterSet/remove", AccessGrantedService.publicAccess, this.removeCounterSet.bind(this));
+        router.post(ApiToolsService.BASE_API_V1 + "user/:idUser/counterSet/:idCounterSet/counter", AccessGrantedService.publicAccess, this.addCounter.bind(this));
+        router.get(ApiToolsService.BASE_API_V1 + "user/:idUser/counterSet/:idCounterSet/counter/:idCounter", AccessGrantedService.publicAccess, this.removeCounter.bind(this));
     }
 
     public getUsers(req: Request, res: Response) {
@@ -57,6 +58,18 @@ export class UserApi {
         this._userRepository.removeCounterSet(req.params.idUser, req.params.idCounterSet)
             .then(response => ApiToolsService.sendJsonResponse(res, response, ApiToolsService.STATUS.OK))
             .catch(error => ApiToolsService.sendJsonResponse(res, error, ApiToolsService.STATUS.INTERNAL_SERVER_ERROR));
+    }
+
+    public addCounter(req: Request, res: Response) {
+        this._userRepository.addCounter(req.params.idUser, req.params.idCounterSet)
+            .then(response => ApiToolsService.sendJsonResponse(res, response, ApiToolsService.STATUS.OK))
+            .catch(error => ApiToolsService.sendJsonResponse(res, error, ApiToolsService.STATUS.INTERNAL_SERVER_ERROR));
+    }
+
+    public removeCounter(req: Request, res: Response) {
+        this._userRepository.removeCounter(req.params.idUser, req.params.idCounterSet, req.params.idCounter)
+            .then(response => ApiToolsService.sendJsonResponse(res, response, ApiToolsService.STATUS.OK))
+            .catch(error => ApiToolsService.sendJsonResponse(res, error, ApiToolsService.STATUS.INTERNAL_SERVER_ERROR) );
     }
 
     public updateCounterSet(req: Request, res: Response) {

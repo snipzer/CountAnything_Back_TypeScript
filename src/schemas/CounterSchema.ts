@@ -2,7 +2,7 @@ import mongoose = require('mongoose');
 import * as _ from 'underscore';
 
 export let counterSchema: mongoose.Schema = new mongoose.Schema({
-    date: {type: Date, required: true}
+    date: {type: Date}
 });
 
 counterSchema.pre("save", next => {
