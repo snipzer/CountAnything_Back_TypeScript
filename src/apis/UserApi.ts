@@ -2,6 +2,7 @@ import {Request, Response, Router} from "express";
 import {ApiToolsService} from "../services/ApiToolsService";
 import {AccessGrantedService} from "../services/AccessGrantedService";
 import {UserRepository} from "../repository/UserRepository";
+import {Schema} from "mongoose";
 
 // TODO VERIFIER LES PARAMETRES D'ENTRER DE CHAQUES METHODES
 export class UserApi {
@@ -39,10 +40,15 @@ export class UserApi {
             .catch(err => ApiToolsService.sendJsonResponse(res, err, ApiToolsService.STATUS.INTERNAL_SERVER_ERROR));
     }
 
-    // TODO empecher la création de deux counter avec un label identique
     public createCounterSet(req: Request, res: Response) {
         this._userRepository.createCounterSet(req.params.id, req.body.label)
-            .then(counterSet => ApiToolsService.sendJsonResponse(res, counterSet, ApiToolsService.STATUS.OK))
+            .then(result => {
+                if(typeof result === typeof Schema) {
+                    ApiToolsService.sendJsonResponse(res, result, ApiToolsService.STATUS.OK);
+                } else {
+                    ApiToolsService.sendJsonResponse(res, result, ApiToolsService.STATUS.INTERNAL_SERVER_ERROR);
+                }
+            })
             .catch(err => ApiToolsService.sendJsonResponse(res, err, ApiToolsService.STATUS.INTERNAL_SERVER_ERROR));
     }
 
