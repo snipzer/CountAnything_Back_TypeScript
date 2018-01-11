@@ -15,9 +15,9 @@ export class IndexRoute extends BaseRoute {
     }
 
     public index(req: Request, res: Response, next: NextFunction) {
-        this.title = "Home | Tour of Heroes";
+        this.title = "Home | CountYourself";
         let options: Object = {
-            message: "Welcome to the Tour of Heroes"
+            message: "Welcome to countYourself"
         };
         this.render("index", req, res, options);
     }
