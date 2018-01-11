@@ -7,11 +7,6 @@ import {Schema} from "mongoose";
 // TODO VERIFIER LES PARAMETRES D'ENTRER DE CHAQUES METHODES
 export class UserApi {
 
-    static LOGIN: string = "login";
-    static REGISTER: string = "register";
-    static USER: string = "user/";
-    static ID: string = ":id";
-    static COUNTER_SET: string = "/counterSet";
     private _userRepository: UserRepository;
 
     constructor(userRepository) {
@@ -25,6 +20,7 @@ export class UserApi {
         router.get(ApiToolsService.BASE_API_V1 + "user", AccessGrantedService.publicAccess, this.getUsers.bind(this));
         router.get(ApiToolsService.BASE_API_V1 + "user/:id", AccessGrantedService.publicAccess, this.getUser.bind(this));
         router.post(ApiToolsService.BASE_API_V1 + "user/:id/counterSet", AccessGrantedService.publicAccess, this.createCounterSet.bind(this));
+        router.get(ApiToolsService.BASE_API_V1 + "user/:idUser/counterSet/:idCounterSet", AccessGrantedService.publicAccess, this.removeCounterSet.bind(this));
         router.post(ApiToolsService.BASE_API_V1 + "user/:idUser/counterSet/:idCounterSet", AccessGrantedService.publicAccess, this.updateCounterSet.bind(this));
         router.post(ApiToolsService.BASE_API_V1 + "user/:idUser/counterSet/:idCounterSet/counter", AccessGrantedService.publicAccess, this.addCounter.bind(this));
         router.get(ApiToolsService.BASE_API_V1 + "user/:idUser/counterSet/:idCounterSet/counter/:idCounter", AccessGrantedService.publicAccess, this.removeCounter.bind(this));
